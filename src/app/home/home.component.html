@@ -1,0 +1,38 @@
+
+
+<form [formGroup]="myForm" >
+
+  <div class="grid2x2">
+
+    <div class="box box1">
+      <div>Heart Rate </div>
+      <mat-form-field class="hm-form-field">
+        <input matInput type="text" formControlName="heartRate" >
+      </mat-form-field>
+    </div>
+
+    <div class="box box4">
+      <div>Oxygen Level</div>
+      <mat-form-field class="hm-form-field">
+        <input matInput type="text" formControlName="SPO2" >
+      </mat-form-field>
+    </div>
+
+    <div class="box box2">
+      <div>Blood Pressure</div>
+      <mat-form-field class="hm-form-field">
+        <input matInput type="text" myForm="bloodPressure"  >
+      </mat-form-field>
+    </div>
+
+    <div class="box box3">
+      <div>Temperature</div>
+      <mat-form-field class="hm-form-field">
+        <input matInput type="text" myForm="temperature" >
+      </mat-form-field>
+    </div>
+
+  </div>
+
+</form>
+
