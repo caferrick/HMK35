@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subscription, interval} from 'rxjs';
 import {ReadQueueService} from '../queues/read-queue.service';
 import {ChildProcessService} from 'ngx-childprocess';
+import 'chartjs-plugin-streaming';
+import { BaseChartDirective} from 'ng2-charts';
+import {ChangeDetection} from '@angular/cli/lib/config/schema';
+import {ChartOptions} from 'chart.js';
 
 
 @Component({
@@ -13,11 +17,56 @@ import {ChildProcessService} from 'ngx-childprocess';
 })
 export class HomeComponent implements OnInit {
 
+
+  @ViewChild(BaseChartDirective,null )
+  public lineChart: BaseChartDirective;
+
   myForm: FormGroup;
   private timer;
 
   subscription: Subscription;
   intervalId: number;
+
+  private chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+
+  datasets: any[] = [{
+    label: 'Dataset 2 (cubic interpolation)',
+  //  backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+    borderColor: this.chartColors.blue,
+    fill: false,
+    cubicInterpolationMode: 'monotone',
+    data: []
+  }];
+
+
+  options: any = {
+    scales: {
+      xAxes: [{
+        type: 'realtime',
+        distribution : 'series',
+         realtime: {
+          onRefresh: function(chart: any) {
+             chart.data.datasets.forEach(function(dataset: any) {
+               dataset.data.push({
+                x: Date.now(),
+                y: Math.random()
+               });
+             });
+          },
+            delay: 2000
+         }
+      }]
+    }
+  };
+
 
   constructor(  private fb: FormBuilder,
                 private childProcessService: ChildProcessService,
@@ -32,9 +81,26 @@ export class HomeComponent implements OnInit {
     });
 
 
-
-
   } // end constructor
+
+
+  randomScalingFactor() {
+    return (Math.random() > 0.5 ? 20.0 : -1.0) * Math.round(Math.random() * 100);
+  }
+
+
+
+
+  onRefresh() {
+  this.lineChart.chart.data.datasets.forEach(function(dataset: any) {
+    dataset.data.push({
+      x: Date.now(),
+      y: Math.random()
+    });
+   });
+    this.lineChart.chart.update();
+  }
+
 
 
   ngOnInit() {
@@ -45,10 +111,10 @@ export class HomeComponent implements OnInit {
   }
 
 
-
   readHeartRateQueue() {
 
-    this.readQueueService.getHeartRate().then(
+    console.log("Chart Data :"+ JSON.stringify(this.lineChart.chart) );
+     this.readQueueService.getHeartRate().then(
       (val) => {
         this.myForm.get('heartRate').setValue(val);
       },

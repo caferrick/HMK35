@@ -8,6 +8,8 @@ import {ReadQueueService} from './queues/read-queue.service';
 import {NgxChildProcessModule} from 'ngx-childprocess';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ChartsModule,
     AppMaterialModule,
     NgxChildProcessModule,
     ReactiveFormsModule,

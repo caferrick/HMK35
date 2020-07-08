@@ -1,10 +1,10 @@
 
 
-<form [formGroup]="myForm" >
-
+<!-- <form [formGroup]="myForm" >  -->
+<form>
   <div class="grid2x2">
 
-    <div class="box box1">
+<!--    <div class="box box1">
       <div>Heart Rate </div>
       <mat-form-field class="hm-form-field">
         <input matInput type="text" formControlName="heartRate" >
@@ -16,9 +16,9 @@
       <mat-form-field class="hm-form-field">
         <input matInput type="text" formControlName="SPO2" >
       </mat-form-field>
-    </div>
+    </div>  -->
 
-    <div class="box box2">
+<!--    <div class="box box2">
       <div>Blood Pressure</div>
       <mat-form-field class="hm-form-field">
         <input matInput type="text" myForm="bloodPressure"  >
@@ -30,7 +30,20 @@
       <mat-form-field class="hm-form-field">
         <input matInput type="text" myForm="temperature" >
       </mat-form-field>
+    </div>   -->
+
+    <div>
+      <canvas baseChart class="chart"
+        [chartType]="'line'"
+        [datasets]="datasets"
+        [options]="options">
+      </canvas>
+
     </div>
+
+<!--    <canvas id="myCanvas" width="600" height="300" >
+    </canvas>  -->
+
 
   </div>
 
