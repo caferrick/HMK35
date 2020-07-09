@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   };
 
   datasets: any[] = [{
-    label: 'Dataset 2 (cubic interpolation)',
+    label: 'Heart Rate',
   //  backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
     borderColor: this.chartColors.blue,
     fill: false,
@@ -50,20 +50,34 @@ export class HomeComponent implements OnInit {
   options: any = {
     scales: {
       xAxes: [{
+        ticks : {
+          autoSkip: true,
+          maxTicksLimit: 15,
+        },
         type: 'realtime',
         distribution : 'series',
          realtime: {
-          onRefresh: function(chart: any) {
+           duration : 20000,
+           refresh : 1000,
+           delay : 2000,
+           onRefresh: function(chart: any) {
              chart.data.datasets.forEach(function(dataset: any) {
                dataset.data.push({
                 x: Date.now(),
-                y: Math.random()
+                y: Math.random() * 80
                });
              });
           },
-            delay: 2000
          }
-      }]
+      }],
+     yAxes: [{
+       ticks: {
+         stepsSize:30,
+         min: 40,
+         max: 160,
+       }
+     }]
+
     }
   };
 
