@@ -1,22 +1,59 @@
 
 
-<!-- <form [formGroup]="myForm" >  -->
-<form>
-  <div class="grid2x2">
+<form [formGroup]="myForm" >
 
-<!--    <div class="box box1">
+
+  <div class="wrapper">
+
+
+    <!-- [datasets]="datasets" -->
+
+   <div class="a">
+      <!--<canvas id = "myChart" baseChart class="chart" -->
+    <canvas id="hrChart" baseChart class="chart"
+              [chartType]="'line'"
+              [datasets]="hrDatasets"
+              [options]="hrChartOptions">
+      </canvas>
+    </div>
+
+
+   <div class="b">
       <div>Heart Rate </div>
       <mat-form-field class="hm-form-field">
         <input matInput type="text" formControlName="heartRate" >
       </mat-form-field>
     </div>
 
-    <div class="box box4">
-      <div>Oxygen Level</div>
+
+    <div class="c">
+      <canvas id="spo2Chart" baseChart class="chart"
+              [chartType]="'line'"
+              [datasets]="spo2Datasets"
+              [options]="spo2ChartOptions">
+      </canvas>
+    </div>
+
+
+    <div class="d">
+      <div>Oxygen </div>
       <mat-form-field class="hm-form-field">
         <input matInput type="text" formControlName="SPO2" >
       </mat-form-field>
-    </div>  -->
+    </div>
+
+
+
+
+
+
+
+    <!--    <div class="box box4">
+          <div>Oxygen Level</div>
+          <mat-form-field class="hm-form-field">
+            <input matInput type="text" formControlName="SPO2" >
+          </mat-form-field>
+        </div>   -->
 
 <!--    <div class="box box2">
       <div>Blood Pressure</div>
@@ -32,20 +69,8 @@
       </mat-form-field>
     </div>   -->
 
-    <div>
-      <canvas baseChart class="chart"
-        [chartType]="'line'"
-        [datasets]="datasets"
-        [options]="options">
-      </canvas>
 
-    </div>
-
-<!--    <canvas id="myCanvas" width="600" height="300" >
-    </canvas>  -->
-
-
+ <!-- <canvas #hrCanvas id="myCanvas" width="500" height="400" >
+  </canvas>  -->
   </div>
-
 </form>
-

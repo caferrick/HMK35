@@ -5,8 +5,9 @@ import {ReadQueueService} from '../queues/read-queue.service';
 import {ChildProcessService} from 'ngx-childprocess';
 import 'chartjs-plugin-streaming';
 import { BaseChartDirective} from 'ng2-charts';
-import {ChangeDetection} from '@angular/cli/lib/config/schema';
-import {ChartOptions} from 'chart.js';
+import {ChartOptions, ChartDataSets} from 'chart.js';
+import {Chart} from 'chart.js';
+import * as annotation from 'chartjs-plugin-annotation';
 
 
 @Component({
@@ -18,14 +19,27 @@ import {ChartOptions} from 'chart.js';
 export class HomeComponent implements OnInit {
 
 
-  @ViewChild(BaseChartDirective,null )
-  public lineChart: BaseChartDirective;
+//  @ViewChild(BaseChartDirective,null )
+//  public lineChart: BaseChartDirective;
+
+  static heartRate: any = 0;
+  static spo2: any = 0;
+  static refresh: any = 2000;
 
   myForm: FormGroup;
-  private timer;
 
   subscription: Subscription;
   intervalId: number;
+  chart;
+  ctx = 'myChart';
+
+
+  lineChartData: ChartDataSets[] = [
+    { data: []  },
+  ];
+
+
+
 
   private chartColors = {
     red: 'rgb(255, 99, 132)',
@@ -37,9 +51,9 @@ export class HomeComponent implements OnInit {
     grey: 'rgb(201, 203, 207)'
   };
 
-  datasets: any[] = [{
+  hrDatasets: any[] = [{
     label: 'Heart Rate',
-  //  backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+    //  backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
     borderColor: this.chartColors.blue,
     fill: false,
     cubicInterpolationMode: 'monotone',
@@ -47,39 +61,111 @@ export class HomeComponent implements OnInit {
   }];
 
 
-  options: any = {
+  spo2Datasets: any[] = [{
+    label: 'Oxygen',
+    //  backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+    borderColor: this.chartColors.blue,
+    fill: false,
+    cubicInterpolationMode: 'monotone',
+    data: []
+  }];
+
+
+
+  hrOptions: any = {
+    scaleShowVerticalLines: false,
+    scaleShowLabels: false,
     scales: {
-      xAxes: [{
+       xAxes: [{
         ticks : {
+          display: false,
           autoSkip: true,
-          maxTicksLimit: 15,
+          maxTicksLimit: 10,
         },
         type: 'realtime',
         distribution : 'series',
-         realtime: {
-           duration : 20000,
-           refresh : 1000,
-           delay : 2000,
-           onRefresh: function(chart: any) {
-             chart.data.datasets.forEach(function(dataset: any) {
-               dataset.data.push({
+        realtime: {
+          duration : 20000,
+          refresh : HomeComponent.refresh,
+          delay : 2000,
+          onRefresh: function(chart: any) {
+            chart.data.datasets.forEach(function(dataset: any) {
+              dataset.data.push({
                 x: Date.now(),
-                y: Math.random() * 80
-               });
-             });
+                y: 40,
+              });
+              dataset.data.push({
+                x: Date.now(),
+                y: HomeComponent.heartRate
+              });
+            });
           },
-         }
+        }
       }],
-     yAxes: [{
-       ticks: {
-         stepsSize:30,
-         min: 40,
-         max: 160,
-       }
-     }]
+      yAxes: [{
+        ticks: {
+          maxTicksLimit: 10,
+          display: false,
+          stepsSize:30,
+          min: 30,
+          max: 110,
+        }
+      }]
 
     }
   };
+
+
+  spo2Options: any = {
+    scaleShowVerticalLines: false,
+    scaleShowLabels: false,
+    scales: {
+      xAxes: [{
+        ticks : {
+          display: false,
+          autoSkip: true,
+          maxTicksLimit: 10,
+        },
+        type: 'realtime',
+        distribution : 'series',
+        realtime: {
+          duration : 20000,
+          refresh : HomeComponent.refresh,
+          delay : 2000,
+          onRefresh: function(chart: any) {
+            chart.data.datasets.forEach(function(dataset: any) {
+              dataset.data.push({
+                x: Date.now(),
+                y: 40,
+              });
+              dataset.data.push({
+                x: Date.now(),
+                y: HomeComponent.spo2
+              });
+            });
+          },
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          maxTicksLimit: 10,
+          display: false,
+          stepsSize:30,
+          min: 60,
+          max: 110,
+        }
+      }]
+
+    }
+  };
+
+
+
+
+
+
+  hrChartOptions: ChartOptions = this.hrOptions;
+  spo2ChartOptions: ChartOptions  = this.spo2Options;
 
 
   constructor(  private fb: FormBuilder,
@@ -87,7 +173,7 @@ export class HomeComponent implements OnInit {
                 private readQueueService: ReadQueueService) {
 
     this.myForm = fb.group({
-      heartRate: [''],
+      heartRate: ['50'],
       SPO2: [''],
       bloodPressure: ['0/0'],
       oxygenLevel: ['0'],
@@ -103,37 +189,35 @@ export class HomeComponent implements OnInit {
   }
 
 
-
-
-  onRefresh() {
-  this.lineChart.chart.data.datasets.forEach(function(dataset: any) {
-    dataset.data.push({
-      x: Date.now(),
-      y: Math.random()
-    });
-   });
-    this.lineChart.chart.update();
+  getHR() {
+    return HomeComponent.heartRate;
   }
 
 
-
   ngOnInit() {
+    Chart.pluginService.register(annotation);
+
+    this.chart = new Chart(this.ctx, {});
 
     const source = interval(2000);
     this.subscription = source.subscribe(val => this.readHeartRateQueue());
     this.subscription = source.subscribe(val => this.readSPO2Queue());
+   // this.subscription = source.subscribe(val => this.updateHRChart());
+
   }
+
 
 
   readHeartRateQueue() {
 
-    console.log("Chart Data :"+ JSON.stringify(this.lineChart.chart) );
      this.readQueueService.getHeartRate().then(
       (val) => {
+        HomeComponent.heartRate = val;
+        HomeComponent.refresh = 1000;
         this.myForm.get('heartRate').setValue(val);
       },
       (err) => {
-      this.myForm.get('heartRate').setValue(-1);
+        this.myForm.get('heartRate').setValue(-1);
       }
     );
 
@@ -143,6 +227,7 @@ export class HomeComponent implements OnInit {
 
       this.readQueueService.getSPO2().then(
         (val) => {
+          HomeComponent.spo2 = val;
           this.myForm.get('SPO2').setValue(val);
         },
         (err) => {
