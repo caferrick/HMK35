@@ -28,4 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Note
 
-This is the frontend for 7 and 3.5 inch raspberry pi screen. 
+This is the front end for 7 and 3.5 inch raspberry pi screen. Runs local using electron
