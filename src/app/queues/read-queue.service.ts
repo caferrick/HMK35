@@ -20,7 +20,8 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-      this.childProcessService.childProcess.exec('/usr/queues/heartRate',
+      //this.childProcessService.childProcess.exec('/usr/queues/heartRate',
+      this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/receiver',
         options,
         (err, out) => {
           if (err) {
@@ -43,8 +44,10 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-      this.childProcessService.childProcess.exec('/usr/queues/SPO2',
-        options,
+//      this.childProcessService.childProcess.exec('/usr/queues/SPO2',
+        this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
+
+          options,
         (err, out) => {
           if (err) {
             console.log("SPO2 Errorr :" + err);

@@ -8,6 +8,7 @@ import { BaseChartDirective} from 'ng2-charts';
 import {ChartOptions, ChartDataSets} from 'chart.js';
 import {Chart} from 'chart.js';
 import * as annotation from 'chartjs-plugin-annotation';
+import {VitalsService} from '../vitals/vitals.service';
 
 
 @Component({
@@ -29,7 +30,6 @@ export class HomeComponent implements OnInit {
   myForm: FormGroup;
 
   subscription: Subscription;
-  intervalId: number;
   chart;
   ctx = 'myChart';
 
@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
             chart.data.datasets.forEach(function(dataset: any) {
               dataset.data.push({
                 x: Date.now(),
-                y: 40,
+                y: 10,
               });
               dataset.data.push({
                 x: Date.now(),
@@ -107,8 +107,8 @@ export class HomeComponent implements OnInit {
           maxTicksLimit: 10,
           display: false,
           stepsSize:30,
-          min: 30,
-          max: 110,
+          min: 0,
+          max: 160,
         }
       }]
 
@@ -170,10 +170,11 @@ export class HomeComponent implements OnInit {
 
   constructor(  private fb: FormBuilder,
                 private childProcessService: ChildProcessService,
+                private vitalsService: VitalsService,
                 private readQueueService: ReadQueueService) {
 
     this.myForm = fb.group({
-      heartRate: ['50'],
+      heartRate: ['0'],
       SPO2: [''],
       bloodPressure: ['0/0'],
       oxygenLevel: ['0'],
@@ -189,9 +190,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-  getHR() {
-    return HomeComponent.heartRate;
-  }
 
 
   ngOnInit() {
@@ -200,11 +198,39 @@ export class HomeComponent implements OnInit {
     this.chart = new Chart(this.ctx, {});
 
     const source = interval(2000);
-    this.subscription = source.subscribe(val => this.readHeartRateQueue());
-    this.subscription = source.subscribe(val => this.readSPO2Queue());
-   // this.subscription = source.subscribe(val => this.updateHRChart());
+//    this.subscription = source.subscribe(val => this.readHeartRateQueue());
+//    this.subscription = source.subscribe(val => this.readSPO2Queue());
+
+    this.subscription = source.subscribe(val => this.readHeartRateService());
+    this.subscription = source.subscribe(val => this.readSpo2Service());
+
 
   }
+
+
+   readHeartRateService() {
+
+     this.vitalsService.getHearRate().subscribe(data => {
+       HomeComponent.heartRate = data;
+       HomeComponent.refresh = 1000;
+       this.myForm.get('heartRate').setValue(data);
+     });
+
+   }
+
+
+  readSpo2Service() {
+
+    this.vitalsService.getSpo2().subscribe( data => {
+      HomeComponent.spo2 = data;
+      HomeComponent.refresh = 1000;
+      this.myForm.get('SPO2').setValue(data);
+    });
+
+
+  }
+
+
 
 
 
