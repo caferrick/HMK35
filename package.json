@@ -13,7 +13,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "electron": "electron .",
-    "electron-build": "ng build --prod && npm run electron .",
+    "dist": "build",
+    "electron-build": "ng build --prod  --base-href ./ && npm run electron .",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -55,7 +56,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.9.5",
     "codelyzer": "^5.0.0",
-    "electron-builder": "^22.3.2",
+    "electron-builder": "^22.7.0",
     "electron-reload": "^1.5.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
