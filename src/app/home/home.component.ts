@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
             chart.data.datasets.forEach(function(dataset: any) {
               dataset.data.push({
                 x: Date.now(),
-                y: 10,
+                y: 0,
               });
               dataset.data.push({
                 x: Date.now(),
