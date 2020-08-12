@@ -12,12 +12,14 @@ import { HttpClientModule} from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { SharedService} from './services/shared.service';
 import { VitalsService} from './vitals/vitals.service';
+import { EkgComponent } from './ekg/ekg.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    EkgComponent
   ],
   imports: [
     BrowserModule,

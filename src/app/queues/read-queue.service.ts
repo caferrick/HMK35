@@ -20,8 +20,8 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-      //this.childProcessService.childProcess.exec('/usr/queues/heartRate',
-      this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/receiver',
+      this.childProcessService.childProcess.exec('/usr/queues/heartRate',
+    //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/receiver',
         options,
         (err, out) => {
           if (err) {
@@ -44,8 +44,8 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-//      this.childProcessService.childProcess.exec('/usr/queues/SPO2',
-        this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
+      this.childProcessService.childProcess.exec('/usr/queues/SPO2',
+ //       this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
 
           options,
         (err, out) => {
@@ -60,5 +60,30 @@ export class ReadQueueService {
         });
      });
   }
+
+
+  getEKG() {
+
+    return new Promise((resolve, reject) => {
+
+      const options: string[] = [];
+
+      this.childProcessService.childProcess.exec('/usr/queues/EKG',
+    //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
+
+        options,
+        (err, out) => {
+          if (err) {
+            console.log("EKG Errorr :" + err);
+            reject('EKG ERROR ....');
+          } else {
+            console.log("EKG Output :" + out);
+            resolve(out);
+          }
+
+        });
+    });
+  }
+
 
 }

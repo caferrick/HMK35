@@ -3,17 +3,17 @@ const url = require("url");
 const path = require("path");
 
 // Enable live reload for Electron too
-require('electron-reload')(__dirname, {
+//require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
-  electron: require(`${__dirname}/node_modules/electron`)
-});
+// electron: require(`${__dirname}/node_modules/electron`)
+//});
 
 let appWindow
 
 function initWindow() {
   appWindow = new BrowserWindow({
-    width: 320,
-    height: 480,
+    width: 900,
+    height: 1100,
     webPreferences: {
       nodeIntegration: true
     }
