@@ -13,7 +13,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: '/ekg',
+    path: 'ekg',
     component: EkgComponent
   }
 
