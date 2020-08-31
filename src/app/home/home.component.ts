@@ -236,8 +236,8 @@ export class HomeComponent implements OnInit {
 
     this.myForm = fb.group({
       heartRate: ['0'],
-      SPO2: [''],
-      irTemp: [''],
+      SPO2: ['0'],
+      irTemp: ['0'],
       bloodPressure: ['0/0'],
       oxygenLevel: ['0']
     });
@@ -293,15 +293,13 @@ export class HomeComponent implements OnInit {
 
   }
 
-
-
-  
+ 
 
   readIrTempQueue() {
 
      this.readQueueService.getIrTemp().then(
       (val) => {
-        HomeComponent.getIrTemp = val;
+        HomeComponent.irTemp = val;
         HomeComponent.refresh = 1000;
         this.myForm.get('irTemp').setValue(val);
       },
@@ -311,8 +309,6 @@ export class HomeComponent implements OnInit {
     );
 
   }
-
-
 
 
 
