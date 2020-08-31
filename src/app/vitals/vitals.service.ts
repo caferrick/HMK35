@@ -26,6 +26,15 @@ export class VitalsService {
   }
 
 
+  getEkg(): Observable<any> {
+    return this.httpClient.get<any>(this.sharedService.getURI('getEkg'), );
+  }
+
+
+  getIrTemp(): Observable<any> {
+    return this.httpClient.get<any>(this.sharedService.getURI('getIrTemp'), );
+  }
+
 
 
 

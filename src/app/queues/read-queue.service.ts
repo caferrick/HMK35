@@ -14,6 +14,30 @@ export class ReadQueueService {
 
 
 
+   getIrTemp() {
+
+    return new Promise((resolve, reject) => {
+
+      const options: string[] = [];
+
+      this.childProcessService.childProcess.exec('/usr/queues/IrTemp',
+    //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/receiver',
+        options,
+        (err, out) => {
+          if (err) {
+            console.log("IrTemp Errorr :" + err);
+            reject('ERROR ....');
+          } else {
+            console.log("IrTemp Output :" + out);
+            resolve(out);
+          }
+
+        });
+     });
+  }
+
+
+
   getHeartRate() {
 
     return new Promise((resolve, reject) => {

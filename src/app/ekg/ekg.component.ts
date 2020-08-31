@@ -64,9 +64,9 @@ export class EkgComponent implements OnInit {
         type: 'realtime',
         distribution : 'series',
         realtime: {
-          duration : 20000,
-          refresh : 10000,
-          delay : 2000,
+          duration : 2000,
+          refresh : 1000,
+          delay : 500,
           onRefresh: function(chart: any) {
             chart.data.datasets.forEach(function(dataset: any) {
               dataset.data.push({
@@ -110,21 +110,42 @@ export class EkgComponent implements OnInit {
 
     this.chart = new Chart(this.ctx, {});
 
-    const source = interval(1000);
+    const source = interval(500);
 //    this.subscription = source.subscribe(val => this.readHeartRateQueue());
-//    this.subscription = source.subscribe(val => this.readSPO2Queue());
+    this.subscription = source.subscribe(val => this.readEKGQueue());
 
-    this.subscription = source.subscribe(val => this.readEkgService());
+
+   // this.subscription = source.subscribe(val => this.readEkgService());
 
   }
 
   readEkgService() {
 
-    this.vitalsService.getHearRate().subscribe(data => {
+    this.vitalsService.getEkg().subscribe(data => {
       EkgComponent.ekgValue = data;
     });
 
   }
+
+
+
+
+
+ readEKGQueue() {
+
+      this.readQueueService.getEKG().then(
+        (val) => {
+          EkgComponent.ekgValue = val;
+         // this.myForm.get('SPO2').setValue(val);
+        },
+        (err) => {
+        ;
+        //this.myForm.get('SPO2').setValue(-1);
+        }
+      );
+
+    }
+
 
 
 

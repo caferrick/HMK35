@@ -14,6 +14,7 @@ export class SharedService {
     {URI: '/secinn/rest/userServices/findUserByGroupDN', KEY: 'usersByGroup'},
     {URI: 'http://24.154.4.10:8000/HMKVitals/rest/vitals/heartRate',KEY: 'getHearRate'},
     {URI: 'http://24.154.4.10:8000/HMKVitals/rest/vitals/spo2',KEY: 'getSpo2'},
+    {URI: 'http://24.154.4.10:8000/HMKVitals/rest/vitals/irTemp',KEY: 'getIrTemp'},
     {URI: '/secinn/rest/userServices/getExternalGroupNames',KEY: 'getExternalGroupNames'}
   ];
 

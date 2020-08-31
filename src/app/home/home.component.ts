@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
 //  public lineChart: BaseChartDirective;
 
   static heartRate: any = 0;
+  static irTemp: any = 0;
   static spo2: any = 0;
   static refresh: any = 2000;
 
@@ -69,6 +70,19 @@ export class HomeComponent implements OnInit {
     cubicInterpolationMode: 'monotone',
     data: []
   }];
+
+
+  irTempDatasets: any[] = [{
+    label: 'Temprature',
+    //  backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+    borderColor: this.chartColors.blue,
+    fill: false,
+    cubicInterpolationMode: 'monotone',
+    data: []
+  }];
+
+
+
 
 
 
@@ -161,11 +175,58 @@ export class HomeComponent implements OnInit {
 
 
 
+  irTempOptions: any = {
+    scaleShowVerticalLines: false,
+    scaleShowLabels: false,
+    scales: {
+      xAxes: [{
+        ticks : {
+          display: false,
+          autoSkip: true,
+          maxTicksLimit: 10,
+        },
+        type: 'realtime',
+        distribution : 'series',
+        realtime: {
+          duration : 20000,
+          refresh : HomeComponent.refresh,
+          delay : 2000,
+          onRefresh: function(chart: any) {
+            chart.data.datasets.forEach(function(dataset: any) {
+              dataset.data.push({
+                x: Date.now(),
+                y: 40,
+              });
+              dataset.data.push({
+                x: Date.now(),
+                y: HomeComponent.irTemp
+              });
+            });
+          },
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          maxTicksLimit: 10,
+          display: false,
+          stepsSize:30,
+          min: 70,
+          max: 110,
+        }
+      }]
+
+    }
+  };
+
+
+
 
 
 
   hrChartOptions: ChartOptions = this.hrOptions;
   spo2ChartOptions: ChartOptions  = this.spo2Options;
+  irTempChartOptions: ChartOptions  = this.irTempOptions;
+
 
 
   constructor(  private fb: FormBuilder,
@@ -176,9 +237,9 @@ export class HomeComponent implements OnInit {
     this.myForm = fb.group({
       heartRate: ['0'],
       SPO2: [''],
+      irTemp: [''],
       bloodPressure: ['0/0'],
-      oxygenLevel: ['0'],
-      temperature: ['0']
+      oxygenLevel: ['0']
     });
 
 
@@ -198,11 +259,13 @@ export class HomeComponent implements OnInit {
     this.chart = new Chart(this.ctx, {});
 
     const source = interval(2000);
-//    this.subscription = source.subscribe(val => this.readHeartRateQueue());
-//    this.subscription = source.subscribe(val => this.readSPO2Queue());
+    this.subscription = source.subscribe(val => this.readHeartRateQueue());
+    this.subscription = source.subscribe(val => this.readSPO2Queue());
+    this.subscription = source.subscribe(val => this.readIrTempQueue());
 
-    this.subscription = source.subscribe(val => this.readHeartRateService());
-    this.subscription = source.subscribe(val => this.readSpo2Service());
+
+   // this.subscription = source.subscribe(val => this.readHeartRateService());
+   // this.subscription = source.subscribe(val => this.readSpo2Service());
 
 
   }
@@ -227,6 +290,25 @@ export class HomeComponent implements OnInit {
       this.myForm.get('SPO2').setValue(data);
     });
 
+
+  }
+
+
+
+  
+
+  readIrTempQueue() {
+
+     this.readQueueService.getIrTemp().then(
+      (val) => {
+        HomeComponent.getIrTemp = val;
+        HomeComponent.refresh = 1000;
+        this.myForm.get('irTemp').setValue(val);
+      },
+      (err) => {
+        this.myForm.get('irTemp').setValue(-1);
+      }
+    );
 
   }
 
