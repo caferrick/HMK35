@@ -1,0 +1,53 @@
+
+
+
+<mat-card [formGroup]="myForm" style="height: 100%" fxFlex="90">
+
+  <mat-card-content>
+
+    <br><br>
+
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="Name " name="name" formControlName="name"  >
+    </mat-form-field>
+    <br>
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="DOB" name="dob" formControlName="dob"  >
+    </mat-form-field>
+    <br>
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="GCS " name="gcs" formControlName="gcs"  >
+    </mat-form-field>
+    <br>
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="LOC" name="loc" formControlName="loc"  >
+    </mat-form-field>
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="Glucose" name="glucose" formControlName="glucose"  >
+    </mat-form-field>
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="Allergies" name="allergies" formControlName="allergies"  >
+    </mat-form-field>
+    <mat-form-field class="hmk-blockFormShort">
+      <input matInput placeholder="Medications" name="meds" formControlName="meds"  >
+    </mat-form-field>
+
+
+
+
+
+
+</mat-card-content>
+
+
+  <mat-dialog-actions>
+    <button class="mat-raised-button mat-primary hmk-buttons" (click)="startRecording()">Start Recording</button>
+    <span class="spacer"></span>
+    <button class="mat-raised-button hmk-buttons mat-dialog-close" (click)="stopRecording()">Stop Recording</button>
+  </mat-dialog-actions>
+
+</mat-card>
+
+
+
+

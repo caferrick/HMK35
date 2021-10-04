@@ -1,0 +1,210 @@
+import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subscription, interval} from 'rxjs';
+import {ReadQueueService} from '../queues/read-queue.service';
+import {ChildProcessService} from 'ngx-childprocess';
+import 'chartjs-plugin-streaming';
+import { BaseChartDirective} from 'ng2-charts';
+import {ChartOptions, ChartDataSets} from 'chart.js';
+import {Chart} from 'chart.js';
+import * as annotation from 'chartjs-plugin-annotation';
+import { ElementRef } from '@angular/core';
+
+
+
+
+@Component({
+  selector: 'app-home',
+  styleUrls: ['./home.component.css'],
+  templateUrl: './home.component.html'
+
+})
+export class HomeComponent implements OnInit {
+
+  @ViewChild('hrCanvas', { static: true })
+  canvas: ElementRef<HTMLCanvasElement>;
+
+//  @ViewChild(BaseChartDirective,null )
+//  public lineChart: BaseChartDirective;
+
+  static heartRate: any = 0;
+  static refresh: any = 2000;
+
+  myForm: FormGroup;
+  private timer;
+
+  subscription: Subscription;
+  intervalId: number;
+
+  private ctx: CanvasRenderingContext2D;
+
+  n = 1;
+  x = 1;
+  fps = 60;
+
+  lineChartData: ChartDataSets[] = [
+    { data: []  },
+  ];
+
+
+  public data = [160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190,
+    160,130,190,130,160,130,190,160,130,160,190,160,130,,160,190];
+
+
+  public data1 = [
+    67, 70, 69, 69, 71, 72, 72, 69, 73, 72, 74, 73, 72, 70,
+    77, 74, 75, 76, 78, 75, 73, 72, 72, 72, 66, 75, 77, 82,
+    67, 69, 71, 75, 77, 78, 72 ];
+
+
+   constructor(  private fb: FormBuilder,
+                private childProcessService: ChildProcessService,
+                private readQueueService: ReadQueueService) {
+
+    this.myForm = fb.group({
+      heartRate: ['50'],
+      SPO2: [''],
+      bloodPressure: ['0/0'],
+      oxygenLevel: ['0'],
+      temperature: ['0']
+    });
+
+
+  } // end constructor
+
+
+
+
+
+  ngOnInit() {
+
+    this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.ctx.fillStyle = '#737373';
+    this.ctx.fill();
+
+
+    //  Chart.pluginService.register(annotation);
+    //this.chart = new Chart(this.ctx, {});
+
+
+    const source = interval(2000);
+    const source1 = interval(500);
+    this.subscription = source.subscribe(val => this.readHeartRateQueue());
+    this.subscription = source1.subscribe(val => this.drawWave());
+
+    //this.subscription = source.subscribe(val => this.readSPO2Queue());
+   // this.subscription = source.subscribe(val => this.updateHRChart());
+
+
+  }
+
+
+  //  this.lineChartData[0].data[0] = this.heartRate;
+ //   this.chart.chart.update();
+
+
+
+
+  readHeartRateQueue() {
+
+     this.readQueueService.getHeartRate().then(
+      (val) => {
+        HomeComponent.heartRate = val;
+        HomeComponent.refresh = 1000;
+        this.myForm.get('heartRate').setValue(val);
+      },
+      (err) => {
+        this.myForm.get('heartRate').setValue(-1);
+      }
+    );
+
+  }
+
+  readSPO2Queue() {
+
+      this.readQueueService.getSPO2().then(
+        (val) => {
+          this.myForm.get('SPO2').setValue(val);
+        },
+        (err) => {
+        this.myForm.get('SPO2').setValue(-1);
+        }
+      );
+
+    }
+
+
+  drawWave() {
+    //setTimeout(function() {
+   // requestAnimationFrame(this.drawWave);
+      this.ctx.lineWidth = 2;
+      this.ctx.strokeStyle = 'green';
+
+//      this.n += 20;
+      if (this.n >= this.data1.length) {
+        this.n = 1;
+      }
+
+
+
+      this.ctx.beginPath();
+
+      this.ctx.moveTo( this.x, 200 ) ;
+      this.ctx.lineTo( this.x , (this.data1[this.n - 1 ]) );
+      this.ctx.moveTo( this.x , (this.data1[this.n - 1 ]) );
+      this.x+=40;
+      this.ctx.lineTo(this.x,200);
+      this.x+=40;
+
+      this.ctx.lineWidth = 2;
+      this.ctx.stroke();
+
+      this.ctx.clearRect(this.x, 0, 10, this.ctx.canvas.height);
+   // },  1000 / this.fps);
+  }
+
+
+} // end class

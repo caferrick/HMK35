@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {EkgComponent} from './ekg/ekg.component';
+import {PatientFormComponent} from './patient-form/patient-form.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'ekg',
     component: EkgComponent
+  },
+  {
+    path: 'patientForm',
+    component: PatientFormComponent
   }
 
 

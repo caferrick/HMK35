@@ -3,13 +3,16 @@
 
   <!-- [datasets]="datasets" -->
 
-  <div class="a">
+<!--  <div class="a"> -->
+  <div style="display: block; width: 600px; height: 500px;">
     <!--<canvas id = "myChart" baseChart class="chart" -->
-    <canvas id="ekgChart" baseChart class="chart"
-            [chartType]="'line'"
+    <canvas id="ekgChart" baseChart width="400" height="400"
+            [chartType]="ekgChartType"
+            [labels]="ekgLabels"
             [datasets]="ekgDatasets"
-            [options]="ekgChartOptions">
+            [options]="ekgOptions">
     </canvas>
-  </div>
+   </div>
+<!--  </div> -->
 
 </div>

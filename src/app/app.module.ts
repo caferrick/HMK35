@@ -13,13 +13,16 @@ import { ChartsModule } from 'ng2-charts';
 import { SharedService} from './services/shared.service';
 import { VitalsService} from './vitals/vitals.service';
 import { EkgComponent } from './ekg/ekg.component';
+import { PatientFormComponent } from './patient-form/patient-form.component';
+import {NgxFsModule} from 'ngx-fs';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    EkgComponent
+    EkgComponent,
+    PatientFormComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { EkgComponent } from './ekg/ekg.component';
     NgxChildProcessModule,
     ReactiveFormsModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxFsModule
   ],
   providers: [
     ReadQueueService,

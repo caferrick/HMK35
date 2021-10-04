@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class SharedService {
 
 
-
   endPoints = [
     {URI: '/secser/x-services/userServices/authenticate', KEY :'authenticate'},
     {URI: '/secinn/rest/userAccess/getUserAttributesNonArray', KEY: 'getUser' },
@@ -14,9 +13,9 @@ export class SharedService {
     {URI: '/secinn/rest/userServices/findUserByGroupDN', KEY: 'usersByGroup'},
     {URI: 'http://24.154.4.10:8000/HMKVitals/rest/vitals/heartRate',KEY: 'getHearRate'},
     {URI: 'http://24.154.4.10:8000/HMKVitals/rest/vitals/spo2',KEY: 'getSpo2'},
+    {URI: 'https://speechtotext-xcrjbgth4a-uc.a.run.app/process', KEY: 'convertAudio'},
     {URI: '/secinn/rest/userServices/getExternalGroupNames',KEY: 'getExternalGroupNames'}
   ];
-
 
 
   constructor() { }
