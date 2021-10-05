@@ -1,0 +1,20 @@
+
+ 9.21.2021
+
+ Need to get the electron application running on 7 or 9 inch touch display.
+
+ Need to recording working from within the application. I think I can use Arecord
+  Tie the system command to start and stop record to the patient for screen. After stop is pressed
+  make the service call to google cloud to transform the WAV file to text. Parse the text and populate the
+  screen field. The service call and the parser are complete.
+
+ Need
+  After leaving the home screen I would like to keep removing data form the Queue's. This when the user goes
+  back to the home screen the most up to date is being displayed.
+
+ Need
+   After leaving the EKG screen I would like to removing data form the queue. So when the user returns to the EKG screen the
+   most up to data is being displayed.
+
+ Need
+   Password protect the local database.
