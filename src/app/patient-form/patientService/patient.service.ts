@@ -25,17 +25,13 @@ export class PatientService {
 
 
 
-
-   startRecording() {
-
-    console.log("Patient Service Starting record process .......");
-
-      return new Promise((resolve, reject) => {
+   stopRecording() {
+   
+       return new Promise((resolve, reject) => {
 
         const options: string[] = [];
 
-        this.childProcessService.childProcess.exec('arecord -D plughw:2,0 -f S16_LE /tmp/patientForm.wav ',
-      //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/receiver',
+        this.childProcessService.childProcess.exec('pkill arecord',
           options,
           (err, out) => {
             if (err) {
@@ -48,7 +44,32 @@ export class PatientService {
 
           });
        });
-    } 
+   
+  
+   }
+
+
+
+   startRecording() {
+
+       return new Promise((resolve, reject) => {
+
+        const options: string[] = [];
+
+        this.childProcessService.childProcess.exec('arecord -D plughw:2,0 -f S16_LE /tmp/patientForm.wav ',
+          options,
+          (err, out) => {
+            if (err) {
+               console.log("Arecord ERROR :" + err);
+              reject('ERROR ....');
+            } else {
+              console.log("Arecord :" + out);
+              resolve(out);
+            }
+
+          });
+       });
+   } 
 
 
 

@@ -40,10 +40,7 @@ export class PatientFormComponent implements OnInit {
 
   startRecording() {
   
-   console.log('Start Recording Called ......');
-
-
-     this.patientService.startRecording().then(
+      this.patientService.startRecording().then(
         (val) => {
           ;
         },
@@ -59,6 +56,8 @@ export class PatientFormComponent implements OnInit {
 
   
   stopRecording() {
+  
+    this.patientService.stopRecording();
   
     this.patientService.convertAudio().then(data => {
     
