@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {VitalsService} from '../vitals/vitals.service';
+//import {VitalsService} from '../vitals/vitals.service';
 import { Parser} from '../utility/parser';
 import { PatientInfo } from '../models/patientInfo';
+import { PatientService} from './patientService/patient.service';
+
 
 @Component({
   selector: 'app-patient-form',
@@ -16,7 +18,7 @@ export class PatientFormComponent implements OnInit {
   parser: Parser = new Parser();
 
   constructor( private fb: FormBuilder,
-               private vitalsService: VitalsService) {
+               private patientService : PatientService) {
 
     this.myForm = fb.group({
       name: [''],
@@ -37,12 +39,33 @@ export class PatientFormComponent implements OnInit {
 
 
   startRecording() {
+  
+   console.log('Start Recording Called ......');
 
-  }
 
+     this.patientService.startRecording().then(
+        (val) => {
+          ;
+        },
+        (err) => {
+          ;
+        }
+      );
+
+ }
+
+
+
+
+  
   stopRecording() {
-    this.vitalsService.convertAudio().subscribe(data => {
+  
+    this.patientService.convertAudio().then(data => {
+    
+      console.log("stopRecording Data : "+ JSON.stringify(data));
       this.dataMap = this.parser.parseInput(JSON.stringify(data));
+      console.log("DataMap : "+ JSON.stringify(this.dataMap));
+            
       this.setName();
       this.setDOB();
       this.setGCS();
@@ -56,8 +79,20 @@ export class PatientFormComponent implements OnInit {
 
 
    setName() {
-     console.log("Name :"+ this.dataMap.get('name') );
-     this.myForm.get('name').setValue(this.dataMap.get('name'));
+
+     const dataFields = ['name', 'named'];
+
+       for(let i=0; i < dataFields.length; i++) {
+
+         if (this.dataMap.has(dataFields[i]) === true ) {
+           this.myForm.get('name').setValue(this.dataMap.get(dataFields[i]) );
+           console.log('Name :'+ this.dataMap.get(dataFields[i]) );
+           break;
+         }
+
+       }
+     
+     
    }
 
 
@@ -127,7 +162,7 @@ export class PatientFormComponent implements OnInit {
   }
 
   setMeds() {
-    const dataFields = ['meds', 'medications', 'med'];
+    const dataFields = ['meds', 'medications', 'med','medication'];
 
     for (let i=0; i < dataFields.length; i++) {
 

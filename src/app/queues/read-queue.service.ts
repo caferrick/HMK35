@@ -14,6 +14,7 @@ export class ReadQueueService {
 
 
 
+
   getHeartRate() {
 
     return new Promise((resolve, reject) => {
@@ -46,7 +47,6 @@ export class ReadQueueService {
 
       this.childProcessService.childProcess.exec('/usr/queues/SPO2',
  //       this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
-
           options,
         (err, out) => {
           if (err) {

@@ -15,7 +15,7 @@ import { VitalsService} from './vitals/vitals.service';
 import { EkgComponent } from './ekg/ekg.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import {NgxFsModule} from 'ngx-fs';
-
+import {PatientService} from './patient-form/patientService/patient.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,8 @@ import {NgxFsModule} from 'ngx-fs';
   providers: [
     ReadQueueService,
     SharedService,
-    VitalsService
+    VitalsService,
+    PatientService
   ],
   bootstrap: [AppComponent]
 })

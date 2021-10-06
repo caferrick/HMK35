@@ -34,22 +34,6 @@ export class VitalsService {
 
 
 
-  convertAudio(): Observable<any> {
-
-    const headers = {'mimeType' : 'multipart/form-data',
-                     Accept: '*/*',
-                     responseType: 'json' };
-
-    const fs = this.fsService.fs as any;
-    const formData = new FormData();
-
-
-    this.fileData = new File( [fs.readFileSync('/Users/ferric4/Downloads/JohnDoe.wav')], 'JohnDoe.wav',  {type : 'audio/wav'} );
-    formData.append('file', this.fileData.slice(0, this.fileData.size,'null'),  'JohnDoe.wav');
-
-    return this.httpClient.post<any>(this.sharedService.getURI('convertAudio'), formData , { headers });
-
-  }
 
 
 

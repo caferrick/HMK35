@@ -14,15 +14,17 @@ export class Parser {
   parseInput( textToParse: string ): Map<string, string> {
 
 
-   textToParse = textToParse.replace('"}', null);
+   textToParse = textToParse.replace('"}', '');
 
-   const convertedText = textToParse.split(/(name|named|DOB|date of birth|GCS|gcs|LLC|LOC|loc|GLUC|glucose|gluc|allergies|medications)/ );
+   let convertedText = textToParse.split(/(name|named|DOB|date of birth|GCS|gcs|LLC|LOC|loc|GLUC|glucose|gluc|allergies|medications|medication)/ );
 
-   for (let idx: 1; idx < convertedText.length; idx++) {
+
+   for (let idx=1; idx < convertedText.length; idx++) {
       this.infoMap.set(convertedText[idx].toLowerCase(), convertedText[idx + 1] );
-      idx++;
-    }
+     // idx++;
+   }
 
+  
    return this.infoMap;
 
  }
