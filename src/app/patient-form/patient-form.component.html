@@ -5,6 +5,16 @@
 
   <mat-card-content>
 
+   <div id="message" *ngIf="displayRecording === true" >
+    <span class="blink_me">Recording ...</span>
+   </div>
+
+    <div id="message" *ngIf="displayProcessing === true" >
+      <span class="blink_me">Processing ...</span>
+    </div>
+
+
+
     <br><br>
 
     <mat-form-field class="hmk-blockFormShort">

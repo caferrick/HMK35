@@ -17,6 +17,9 @@ export class PatientFormComponent implements OnInit {
   myForm: FormGroup;
   parser: Parser = new Parser();
 
+  displayRecording = false;
+  displayProcessing = false;
+
   constructor( private fb: FormBuilder,
                private patientService : PatientService) {
 
@@ -39,15 +42,18 @@ export class PatientFormComponent implements OnInit {
 
 
   startRecording() {
-  
-      this.patientService.startRecording().then(
+
+    this.displayRecording = true;
+    this.displayProcessing = false;
+
+    /*  this.patientService.startRecording().then(
         (val) => {
           ;
         },
         (err) => {
           ;
         }
-      );
+      );  */
 
  }
 
@@ -56,9 +62,12 @@ export class PatientFormComponent implements OnInit {
 
   
   stopRecording() {
-  
-    this.patientService.stopRecording();
-  
+
+    this.displayRecording = false;
+    this.displayProcessing = true;
+
+
+    //this.patientService.stopRecording();
     this.patientService.convertAudio().then(data => {
     
       console.log("stopRecording Data : "+ JSON.stringify(data));
@@ -72,7 +81,11 @@ export class PatientFormComponent implements OnInit {
       this.setLOC();
       this.setGlucose();
       this.setMeds();
+
+      this.displayProcessing = false;
+
     });
+
   }
 
 

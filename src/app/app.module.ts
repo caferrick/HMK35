@@ -9,7 +9,7 @@ import {NgxChildProcessModule} from 'ngx-childprocess';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule} from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
+import {ChartsModule, ThemeService} from 'ng2-charts';
 import { SharedService} from './services/shared.service';
 import { VitalsService} from './vitals/vitals.service';
 import { EkgComponent } from './ekg/ekg.component';
@@ -40,6 +40,7 @@ import {PatientService} from './patient-form/patientService/patient.service';
     ReadQueueService,
     SharedService,
     VitalsService,
+    ThemeService,
     PatientService
   ],
   bootstrap: [AppComponent]
