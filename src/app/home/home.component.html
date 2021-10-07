@@ -1,12 +1,19 @@
 
 
-<form [formGroup]="myForm" >
+<form [formGroup]="myForm" style="background-color: #fff">
 
+    <div class="hm-small-form-field">
+        <label  for="temp">Temperature :</label>
+            <span>
+        <input class="temperature-font-size" name="temp" id="temp"
+               type="text" formControlName="temperature" readonly/>
+        </span>
 
-  <div class="wrapper">
+    </div>
 
+    <div class="wrapper1">
 
-    <!-- [datasets]="datasets" -->
+   <!-- -------------------------- Heart Rate Section ------------------------->
 
    <div class="a">
       <!--<canvas id = "myChart" baseChart class="chart" -->
@@ -26,6 +33,9 @@
     </div>
 
 
+
+        <!--- ---------------------------- SpO2 Section ------------------------->
+
     <div class="c">
       <canvas id="spo2Chart" baseChart class="chart"
               [chartType]="'line'"
@@ -41,6 +51,7 @@
         <input matInput type="text" formControlName="SPO2" >
       </mat-form-field>
     </div>
+
 
 
 

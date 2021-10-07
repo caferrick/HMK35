@@ -357,10 +357,11 @@ mat-form-field {
 
 
 
-.wrapper {
+.wrapper1 {
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 400px 10px 75px;
+ // grid-template-columns: auto auto auto;
   background-color: #fff;
   color: #444;
 }
@@ -368,7 +369,7 @@ mat-form-field {
 .box {
   background-color: #444;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 20px;
   font-size: 150%;
 
@@ -380,8 +381,9 @@ mat-form-field {
 }
 .b {
   grid-column: 3 ;
-  grid-row: 1 / 3;
+  grid-row: 1;
 }
+
 .c {
   grid-column: 1 / 3 ;
   grid-row: 2 ;
@@ -390,6 +392,9 @@ mat-form-field {
   grid-column: 3;
   grid-row: 2;
 }
+
+
+
 
 
 .hmk-blockFormShort {

@@ -9,3 +9,24 @@
   margin: auto;
   display: block;
 }
+
+
+.hm-small-form-field {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.temperature-font-size {
+  font-size: 20px;
+}
+
+
+
+
+.hmk-tempBlock {
+  padding-left: 5px;
+  font-size: 30px;
+  width: 70px;
+  margin: 0px;
+}
+

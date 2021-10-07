@@ -198,8 +198,10 @@ export class HomeComponent implements OnInit {
     this.chart = new Chart(this.ctx, {});
 
     const source = interval(2000);
-//    this.subscription = source.subscribe(val => this.readHeartRateQueue());
-//    this.subscription = source.subscribe(val => this.readSPO2Queue());
+    this.subscription = source.subscribe(val => this.readHeartRateQueue());
+    this.subscription = source.subscribe(val => this.readSPO2Queue());
+    this.subscription = source.subscribe(val => this.readIrTempQueue());
+
 
  //   this.subscription = source.subscribe(val => this.readHeartRateService());
  //   this.subscription = source.subscribe(val => this.readSpo2Service());
@@ -262,6 +264,24 @@ export class HomeComponent implements OnInit {
       );
 
     }
+
+  readIrTempQueue() {
+
+    this.readQueueService.getIrTemp().then(
+        (val) => {
+          //HomeComponent.spo2 = val;
+          this.myForm.get('temperature').setValue(val);
+        },
+        (err) => {
+          this.myForm.get('temperature').setValue(-1);
+        }
+    );
+
+  }
+
+
+
+
 
 
 } // end class

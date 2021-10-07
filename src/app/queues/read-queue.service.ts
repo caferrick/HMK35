@@ -86,4 +86,31 @@ export class ReadQueueService {
   }
 
 
+    getIrTemp() {
+
+        return new Promise((resolve, reject) => {
+
+            const options: string[] = [];
+
+            this.childProcessService.childProcess.exec('/usr/queues/IrTemp',
+
+                options,
+                (err, out) => {
+                    if (err) {
+                        console.log("IrTemp Errorr :" + err);
+                        reject('EKG ERROR ....');
+                    } else {
+                        console.log("IrTemp Output :" + out);
+                        resolve(out);
+                    }
+
+                });
+        });
+    }
+
+
+
+
+
+
 }
