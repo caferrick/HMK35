@@ -1,7 +1,7 @@
 {
   "name": "HMHSVitals",
   "version": "0.0.1",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "rebuild": "electrong-rebuild -f -w sqlite3",
@@ -16,7 +16,8 @@
     "dist": "build",
     "package:electron": "electron-packager . ",
     "electron-build": "ng build --prod  --base-href ./ && npm run electron .",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=main.js --publish never"
   },
   "private": true,
   "dependencies": {
@@ -61,7 +62,7 @@
     "@types/node": "^8.9.5",
     "codelyzer": "^5.0.0",
     "electron": "^8.0.2",
-    "electron-builder": "^22.7.0",
+    "electron-builder": "^22.10.5",
     "electron-packager": "^15.0.0",
     "electron-reload": "^1.5.0",
     "jasmine-core": "~3.4.0",
@@ -74,6 +75,17 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0"
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "repo": "electron-cra-example",
+      "owner": "caferrick"
+    }
   },
   "browser": {
     "child_process": false,
