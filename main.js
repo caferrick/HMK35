@@ -16,7 +16,7 @@ function initWindow() {
     height: 1100,
     webPreferences: {
       nodeIntegration: true,
-      devTools: false
+      devTools: true
 
     }
   })

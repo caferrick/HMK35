@@ -26,10 +26,8 @@ export class ReadQueueService {
         options,
         (err, out) => {
           if (err) {
-            console.log("HR Errorr :" + err);
             reject('ERROR ....');
           } else {
-            console.log("HR Output :" + out);
             resolve(out);
           }
 
@@ -50,10 +48,8 @@ export class ReadQueueService {
           options,
         (err, out) => {
           if (err) {
-            console.log("SPO2 Errorr :" + err);
             reject('ERROR ....');
           } else {
-            console.log("SPO2 Output :" + out);
             resolve(out);
           }
 
@@ -97,10 +93,8 @@ export class ReadQueueService {
                 options,
                 (err, out) => {
                     if (err) {
-                        console.log("IrTemp Errorr :" + err);
                         reject('EKG ERROR ....');
                     } else {
-                        console.log("IrTemp Output :" + out);
                         resolve(out);
                     }
 

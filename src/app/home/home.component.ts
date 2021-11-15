@@ -211,7 +211,7 @@ export class HomeComponent implements OnInit {
 
      this.vitalsService.getHearRate().subscribe(data => {
        HomeComponent.heartRate = data;
-       HomeComponent.refresh = 1000;
+       HomeComponent.refresh = 1200;
        this.myForm.get('heartRate').setValue(data);
      });
 
@@ -222,7 +222,7 @@ export class HomeComponent implements OnInit {
 
     this.vitalsService.getSpo2().subscribe( data => {
       HomeComponent.spo2 = data;
-      HomeComponent.refresh = 1000;
+      HomeComponent.refresh = 1200;
       this.myForm.get('SPO2').setValue(data);
     });
 
