@@ -161,9 +161,6 @@ export class HomeComponent implements OnInit {
 
 
 
-
-
-
   hrChartOptions: ChartOptions = this.hrOptions;
   spo2ChartOptions: ChartOptions  = this.spo2Options;
 
