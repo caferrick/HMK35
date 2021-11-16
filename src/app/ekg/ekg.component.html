@@ -1,19 +1,20 @@
-<!--<div class="wrapper"> -->
-  <div class="chartWrapper">
 
-  <!-- [datasets]="datasets" -->
+<div style="width: 100%; overflow-x: auto; overflow-y: auto">
 
-<!--  <div class="a"> -->
-  <!-- <div style="display: block; width: 600px; height: 500px; overflow-x: scroll;"> -->
-    <div class="chartAreaWrapper">
-    <!--<canvas id = "myChart" baseChart class="chart" -->
-    <canvas id="ekgChart" baseChart width="600" height="400" >
-            [chartType]="ekgChartType"
-            [labels]="ekgLabels"
-            [datasets]="ekgDatasets"
-            [options]="ekgOptions">
-    </canvas>
-   </div>
-<!--  </div> -->
+<!-- <div style="display: block; width: 600px; height: 500px;"> -->
+
+
+  <div style="width: 3000px; height: 500px">
+
+  <!--<canvas id = "myChart" baseChart class="chart" -->
+       <canvas id="ekgChart" baseChart width="1200" height="400"
+               [chartType]="ekgChartType"
+               [labels]="ekgLabels"
+               [datasets]="ekgDatasets"
+               [options]="ekgOptions">
+       </canvas>
+     </div>
+
+  <!--  </div> -->
 
 </div>
