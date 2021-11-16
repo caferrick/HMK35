@@ -21,7 +21,7 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-      this.childProcessService.childProcess.exec('/usr/queues/heartRate',
+      this.childProcessService.childProcess.exec('nice -10 /usr/queues/heartRate',
     //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/receiver',
         options,
         (err, out) => {
@@ -43,7 +43,7 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-      this.childProcessService.childProcess.exec('/usr/queues/SPO2',
+      this.childProcessService.childProcess.exec('nice -10 /usr/queues/SPO2',
  //       this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
           options,
         (err, out) => {
@@ -88,7 +88,7 @@ export class ReadQueueService {
 
             const options: string[] = [];
 
-            this.childProcessService.childProcess.exec('/usr/queues/IrTemp',
+            this.childProcessService.childProcess.exec('nice -10 /usr/queues/IrTemp',
 
                 options,
                 (err, out) => {
