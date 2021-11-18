@@ -69,7 +69,7 @@ export class EkgComponent implements OnInit {
   ngOnInit() {
 
   //  const source = interval(3000);
-//    this.subscription = source.subscribe(val => this.readEKGQueue());
+  //  this.subscription = source.subscribe(val => this.readEKGQueue());
     this.readEKGQueue();
 
   }
@@ -97,24 +97,7 @@ export class EkgComponent implements OnInit {
       },
       (err) => {
         console.log("EKG Read ERROR ..........");
-      }
-    );
-
-
-    // this.ekgDatasets[0].data = [];
-  /*  for(let i=0; i<700; i++) {
-
-       this.readQueueService.getEKG().then(
-        (val) => {
-         this.ekgDatasets[0].data.push(Number(val));
-         console.log("EKG Read :"+ val);
-        },
-        (err) => {
-          this.ekgDatasets[0].data.push(-1);
-        }
-      );
-
-    } */
+      });
 
   }
 
