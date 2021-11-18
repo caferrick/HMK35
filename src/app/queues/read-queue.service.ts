@@ -65,9 +65,8 @@ export class ReadQueueService {
       const options: string[] = [];
 
     //  this.childProcessService.childProcess.exec('/usr/queues/EKG',
-    //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
 
-      this.childProcessService.childProcess.exec('/Users/ferric4/C-progs/a.out',
+      this.childProcessService.childProcess.exec('/usr/queues/EkgSql',
         options,
         (err, out) => {
           if (err) {
