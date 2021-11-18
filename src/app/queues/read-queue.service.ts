@@ -64,16 +64,16 @@ export class ReadQueueService {
 
       const options: string[] = [];
 
-      this.childProcessService.childProcess.exec('/usr/queues/EKG',
+    //  this.childProcessService.childProcess.exec('/usr/queues/EKG',
     //  this.childProcessService.childProcess.exec('/Users/ferric4/CPP-progs/queue/spo2Rec',
 
+      this.childProcessService.childProcess.exec('/Users/ferric4/C-progs/a.out',
         options,
         (err, out) => {
           if (err) {
             console.log("EKG Errorr :" + err);
             reject('EKG ERROR ....');
           } else {
-            console.log("EKG Output :" + out);
             resolve(out);
           }
 
