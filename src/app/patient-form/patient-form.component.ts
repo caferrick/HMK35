@@ -122,7 +122,7 @@ export class PatientFormComponent implements OnInit {
    }
 
    setLOC() {
-     const dataFields = ['loc', 'llc', 'look'];
+     const dataFields = ['loc', 'llc', 'look', 'bloke'];
 
      for(let i=0; i < dataFields.length; i++) {
 
