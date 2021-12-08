@@ -92,7 +92,7 @@ export class PatientFormComponent implements OnInit {
 
    setName() {
 
-     const dataFields = ['named', 'name'];
+     const dataFields = ['Named','named', 'Name', 'name'];
 
        for(let i=0; i < dataFields.length; i++) {
 
