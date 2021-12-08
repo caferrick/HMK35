@@ -46,21 +46,21 @@ export class PatientFormComponent implements OnInit {
     this.displayRecording = true;
     this.displayProcessing = false;
 
-    /*  this.patientService.startRecording().then(
+      this.patientService.startRecording().then(
         (val) => {
           ;
         },
         (err) => {
           ;
         }
-      );  */
+      ); 
 
  }
 
 
 
 
-  
+
   stopRecording() {
 
     this.displayRecording = false;
@@ -69,11 +69,11 @@ export class PatientFormComponent implements OnInit {
 
     //this.patientService.stopRecording();
     this.patientService.convertAudio().then(data => {
-    
+
       console.log("stopRecording Data : "+ JSON.stringify(data));
       this.dataMap = this.parser.parseInput(JSON.stringify(data));
       console.log("DataMap : "+ JSON.stringify(this.dataMap));
-            
+
       this.setName();
       this.setDOB();
       this.setGCS();
@@ -103,8 +103,8 @@ export class PatientFormComponent implements OnInit {
          }
 
        }
-     
-     
+
+
    }
 
 
