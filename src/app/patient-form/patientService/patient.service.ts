@@ -31,7 +31,7 @@ export class PatientService {
 
         const options: string[] = [];
 
-        this.childProcessService.childProcess.exec('pkill arecord',
+        this.childProcessService.childProcess.exec('sudo pkill arecord',
           options,
           (err, out) => {
             if (err) {

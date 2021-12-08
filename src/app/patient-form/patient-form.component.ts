@@ -53,7 +53,7 @@ export class PatientFormComponent implements OnInit {
         (err) => {
           ;
         }
-      ); 
+      );
 
  }
 
@@ -67,7 +67,7 @@ export class PatientFormComponent implements OnInit {
     this.displayProcessing = true;
 
 
-    //this.patientService.stopRecording();
+    this.patientService.stopRecording();
     this.patientService.convertAudio().then(data => {
 
       console.log("stopRecording Data : "+ JSON.stringify(data));
