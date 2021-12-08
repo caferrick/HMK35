@@ -92,7 +92,7 @@ export class PatientFormComponent implements OnInit {
 
    setName() {
 
-     const dataFields = ['name', 'named'];
+     const dataFields = ['named', 'name'];
 
        for(let i=0; i < dataFields.length; i++) {
 
@@ -122,7 +122,7 @@ export class PatientFormComponent implements OnInit {
    }
 
    setLOC() {
-     const dataFields = ['loc', 'llc'];
+     const dataFields = ['loc', 'llc', 'look'];
 
      for(let i=0; i < dataFields.length; i++) {
 
