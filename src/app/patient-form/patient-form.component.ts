@@ -128,6 +128,7 @@ export class PatientFormComponent implements OnInit {
 
        if ( this.dataMap.has(dataFields[i]) === true ) {
          this.myForm.get('loc').setValue(this.dataMap.get(dataFields[i]) );
+         console.log('loc :'+ this.dataMap.get(dataFields[i]) + ' Field :'+ this.dataMap.has(dataFields[i]));
          break;
        }
      }
